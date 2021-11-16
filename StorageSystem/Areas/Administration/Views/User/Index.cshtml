@@ -1,0 +1,73 @@
+﻿@model IEnumerable<UserViewModel>
+
+@{
+    ViewData["Title"] = "All users";
+    int index = 1;
+}
+
+<div>
+    @if (!Model.Any())
+    {
+        <hr class="bg-info cm-hr" />
+        <div class="text-secondary font-size-30 text-center mt-4">There are no users!</div>
+        <hr class="bg-info cm-hr" />
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr class="row">
+                    <th class="col-md-1">&#8470;</th>
+                    <th class="col-md-2">Username</th>
+                    <th class="col-md-2">Name</th>
+                    <th class="col-md-2">Surname</th>
+                    <th class="col-md-2">Role</th>
+                    <th class="col-md-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr class="row">
+                        <td class="col-md-1">@(index++)</td>
+                        <td class="col-md-2">
+                            <a class="text-dark"
+                               asp-area="@AdministrationArea"
+                               asp-controller="User"
+                               asp-action="Details"
+                               asp-route-id="@user.Id">
+                                @user.Username
+                            </a>
+                        </td>
+                        <td class="col-md-2">@user.Name</td>
+                        <td class="col-md-2">@user.Surname</td>
+                        <td class="col-md-2">@user.Role</td>
+                        <td class="col-md-3">
+                            <a class="btn btn-outline-primary btn-sm mx-3"
+                               asp-area="@AdministrationArea"
+                               asp-controller="User"
+                               asp-action="Edit"
+                               asp-route-id="@user.Id">
+                                Edit
+                            </a>
+                            <a class="btn btn-outline-danger btn-sm"
+                               asp-area="@AdministrationArea"
+                               asp-controller="User"
+                               asp-action="Delete"
+                               asp-route-id="@user.Id">
+                                Delete
+                            </a>
+                            <a class="btn btn-outline-primary btn-sm mx-3"
+                               asp-area="@AdministrationArea"
+                               asp-controller="User"
+                               asp-action="Details"
+                               asp-route-id="@user.Id">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
