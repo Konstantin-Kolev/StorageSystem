@@ -54,11 +54,8 @@ namespace StorageSystem.Areas.Administration.Controllers
 
         public IActionResult Delete(int id)
         {
-            countryService.Delete(id);
-            return RedirectToAction(nameof(Index));
-
-            //CountryDetailsViewModel model = countryService.FindById<CountryDetailsViewModel>(id);
-            //return View(model);
+            CountryDetailsViewModel model = countryService.FindById<CountryDetailsViewModel>(id);
+            return View(model);
         }
 
         [HttpPost]
@@ -66,7 +63,7 @@ namespace StorageSystem.Areas.Administration.Controllers
         public IActionResult DeleteConfirm(int id)
         {
             countryService.Delete(id);
-            return RedirectToAction("Index", "Country");
+            return RedirectToAction(nameof(Index));
         }
     }
 }
