@@ -90,7 +90,7 @@ namespace StorageSystem.Areas.Administration.Controllers
 
         [HttpPost]
         [ActionName(nameof(Delete))]
-        public async Task<IActionResult> DelteConfirm(string id)
+        public async Task<IActionResult> DeleteConfirm(string id)
         {
             User user = await userManager.FindByIdAsync(id);
             await userManager.DeleteAsync(user);

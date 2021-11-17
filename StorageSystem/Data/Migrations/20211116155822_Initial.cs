@@ -58,8 +58,10 @@ namespace StorageSystem.Data.Migrations
                 name: "Countries",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -87,35 +89,35 @@ namespace StorageSystem.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Clients",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    CountryId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clients", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Clients_Countries_CountryId",
-                        column: x => x.CountryId,
-                        principalTable: "Countries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                 name: "Clients",
+                 columns: table => new
+                 {
+                     Id = table.Column<int>(type: "int", nullable: false)
+                         .Annotation("SqlServer:Identity", "1, 1"),
+                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                     CountryId = table.Column<int>(type: "int", nullable: false)
+                 },
+                 constraints: table =>
+                 {
+                     table.PrimaryKey("PK_Clients", x => x.Id);
+                     table.ForeignKey(
+                         name: "FK_Clients_Countries_CountryId",
+                         column: x => x.CountryId,
+                         principalTable: "Countries",
+                         principalColumn: "Id",
+                         onDelete: ReferentialAction.Cascade);
+                 });
 
             migrationBuilder.CreateTable(
                 name: "Manufacturers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    CountryId = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CountryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -2,7 +2,7 @@
 
 namespace StorageSystem.Data.Migrations
 {
-    public partial class userRoleInUser : Migration
+    public partial class UserRoleInUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
