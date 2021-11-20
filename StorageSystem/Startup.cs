@@ -52,6 +52,7 @@ namespace StorageSystem
                 .AddDefaultTokenProviders();
 
             services.AddTransient<ICountryService, CountryService>();
+            services.AddTransient<IManufacturerService, ManufacturerService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

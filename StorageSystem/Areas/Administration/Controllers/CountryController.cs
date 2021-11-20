@@ -17,7 +17,7 @@ namespace StorageSystem.Areas.Administration.Controllers
             this.countryService = countryService;
         }
 
-        public IActionResult Index() => View(countryService.GetAll());
+        public IActionResult Index() => View(countryService.GetAllViewModel());
 
         public IActionResult Details(int id)
         {
