@@ -60,9 +60,9 @@ namespace StorageSystem.Areas.Administration.Controllers
 
         [HttpPost]
         [ActionName(nameof(Delete))]
-        public IActionResult DeleteConfirm(int id)
+        public async Task<IActionResult> DeleteConfirm(int id)
         {
-            countryService.Delete(id);
+            await countryService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
     }
