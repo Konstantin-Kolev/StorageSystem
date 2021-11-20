@@ -1,0 +1,56 @@
+﻿@model IEnumerable<ManufacturerViewModel>
+
+@{
+    int index = 1;
+}
+
+<div>
+    @if (!Model.Any())
+    {
+        <hr class="bg-info cm-hr" />
+        <div class="text-secondary font-size-30 text-center mt-4">There are no manufacturers!</div>
+        <hr class="bg-info cm-hr" />
+    }
+    else
+    {
+        @*<table class="table table-striped">
+            <thead>
+                <tr class="row">
+                    <th class="col-md-1">&#8470;</th>
+                    <th class="col-md-2">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var manufacturer in Model)
+                {
+                    <tr class="row">
+                        <td class="col-md-1">@(index++)</td>
+                        <td class="col-md-2">
+                            <a class="text-dark"
+                               asp-area="@AdministrationArea"
+                               asp-controller="Manufacturer"
+                               asp-action="Details"
+                               asp-route-id="@manufacturer.Id">
+                                @manufacturer.Name
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>*@
+
+       <div class="list-group list-group-flush">
+           @foreach(var manufacturer in Model)
+                {
+                    <a class="list-group-item list-group-item-action"
+                       asp-area="@AdministrationArea"
+                       asp-controller="Manufacturer"
+                       asp-action="Details" 
+                       asp-route-id="@manufacturer.Id">
+                        @manufacturer.Name
+                    </a>
+                }
+       </div>
+
+    }
+</div>

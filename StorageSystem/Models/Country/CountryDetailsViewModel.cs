@@ -1,4 +1,5 @@
-﻿using StorageSystem.Services.Mappings;
+﻿using StorageSystem.Models.Manufacturer;
+using StorageSystem.Services.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace StorageSystem.Models.Country
         public string Name { get; set; }
 
         public string Code { get; set; }
+
+        public IEnumerable<ManufacturerViewModel> Manufacturers { get; set; }
     }
 }
