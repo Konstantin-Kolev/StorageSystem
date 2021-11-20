@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ManufacturerViewModel>
+
+@{
+    ViewData["Title"] = "All manufacturer";
+    int index = 1;
+}
+
+<div>
+    @if (!Model.Any())
+    {
+        <hr class="bg-info cm-hr" />
+        <div class="text-secondary font-size-30 text-center mt-4">There are no manufacturers!</div>
+        <hr class="bg-info cm-hr" />
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr class="row">
+                    <th class="col-md-1">&#8470;</th>
+                    <th class="col-md-2">Name</th>
+                    <th class="col-md-2">Country</th>
+                    <th class="col-md-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var manufacturer in Model)
+                {
+                    <tr class="row">
+                        <td class="col-md-1">@(index++)</td>
+                        <td class="col-md-2">
+                            <a class="text-dark"
+                               asp-area="@AdministrationArea"
+                               asp-controller="Manufacturer"
+                               asp-action="Details"
+                               asp-route-id="@manufacturer.Id">
+                                @manufacturer.Name
+                            </a>
+                        </td>
+                        <td class="col-md-2">@manufacturer.CountryCode</td>
+                        <td class="col-md-3">
+                            <a class="btn btn-outline-primary btn-sm mx-3"
+                               asp-area="@AdministrationArea"
+                               asp-controller="Manufacturer"
+                               asp-action="Edit"
+                               asp-route-id="@manufacturer.Id">
+                                Edit
+                            </a>
+                            <a class="btn btn-outline-danger btn-sm"
+                               asp-area="@AdministrationArea"
+                               asp-controller="Manufacturer"
+                               asp-action="Delete"
+                               asp-route-id="@manufacturer.Id">
+                                Delete
+                            </a>
+                            <a class="btn btn-outline-primary btn-sm mx-3"
+                               asp-area="@AdministrationArea"
+                               asp-controller="Manufacturer"
+                               asp-action="Details"
+                               asp-route-id="@manufacturer.Id">
+                                Details
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

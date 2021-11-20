@@ -1,0 +1,23 @@
+﻿@model ManufacturerDetailsModel
+@{
+    ViewData["Title"] = "Delete manufacturer";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Name" class="font-weight-bold"></label>
+                <input asp-for="Name" readonly class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CountryName" class="font-weight-bold"></label>
+                <input asp-for="CountryName" readonly class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a class="btn btn-primary" asp-area="@AdministrationArea" asp-controller="Manufacturer" asp-action="Index">Back</a>
+        </form>
+    </div>
+</div>

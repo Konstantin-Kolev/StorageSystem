@@ -11,17 +11,20 @@ namespace StorageSystem.Areas.Administration.Controllers
     public class CountryController : AdministrationBaseController
     {
         private readonly ICountryService countryService;
+        private readonly IManufacturerService manufacturerService;
 
-        public CountryController(ICountryService countryService)
+        public CountryController(ICountryService countryService, IManufacturerService manufacturerService)
         {
             this.countryService = countryService;
+            this.manufacturerService = manufacturerService;
         }
 
-        public IActionResult Index() => View(countryService.GetAll());
+        public IActionResult Index() => View(countryService.GetAllViewModel());
 
         public IActionResult Details(int id)
         {
             CountryDetailsViewModel model = countryService.FindById<CountryDetailsViewModel>(id);
+            model.Manufacturers = manufacturerService.GetAll().Where(m => m.CountryId == model.Id);
             return View(model);
         }
 

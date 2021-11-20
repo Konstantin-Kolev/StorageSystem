@@ -16,6 +16,7 @@
                 <label asp-for="Code" class="font-weight-bold"></label>
                 <input asp-for="Code" readonly class="form-control" />
             </div>
+            @await Html.PartialAsync("_ManufacturersListPartial", Model.Manufacturers) 
             <a class="btn btn-danger" asp-area="@AdministrationArea" asp-controller="Country" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
             <a class="btn btn-primary" asp-area="@AdministrationArea" asp-controller="Country" asp-action="Index">Back</a>
         </form>

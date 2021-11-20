@@ -1,4 +1,5 @@
-﻿using StorageSystem.Models.Country;
+﻿using StorageSystem.Data.Entities;
+using StorageSystem.Models.Country;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,14 @@ namespace StorageSystem.Services.Contracts
 
         public Task Update(CountryEditInputModel model);
 
-        public IEnumerable<CountryViewModel> GetAll();
+        public IEnumerable<CountryViewModel> GetAllViewModel();
+
+        public IEnumerable<Country> GetAll();
 
         public Task Delete(int id);
 
         public T FindById<T>(int id);
+
+        public Country GetById(int id);
     }
 }

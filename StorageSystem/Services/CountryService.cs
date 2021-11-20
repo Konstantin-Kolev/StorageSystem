@@ -28,7 +28,7 @@ namespace StorageSystem.Services
 
         public async Task Delete(int id)
         {
-            Country country = context.Countries.Find(id);
+            Country country =  await context.Countries.FindAsync(id);
             context.Countries.Remove(country);
             await context.SaveChangesAsync();
         }
@@ -40,14 +40,18 @@ namespace StorageSystem.Services
             .To<T>()
             .FirstOrDefault();
 
-        public IEnumerable<CountryViewModel> GetAll() => 
+        public IEnumerable<Country> GetAll() =>
+            context.Countries;
+
+        public IEnumerable<CountryViewModel> GetAllViewModel() => 
             context.Countries.To<CountryViewModel>().ToList();
+
+        public Country GetById(int id) =>
+            context.Countries.Find(id);
 
         public async Task Update(CountryEditInputModel model)
         {
-            Country country = context.Countries.Find(model.Id);
-            country.Name = model.Name;
-            country.Code = model.Code;
+            Country country = model.To<Country>();
 
             context.Update(country);
             await context.SaveChangesAsync();
