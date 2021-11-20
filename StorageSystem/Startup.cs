@@ -11,6 +11,8 @@ using StorageSystem.Data;
 using StorageSystem.Data.Entities;
 using StorageSystem.Data.Seeding;
 using StorageSystem.Models.User;
+using StorageSystem.Services;
+using StorageSystem.Services.Contracts;
 using StorageSystem.Services.Mappings;
 using System;
 using System.Collections.Generic;
@@ -35,9 +37,7 @@ namespace StorageSystem
             services.AddDbContext<StorageSystemDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<StorageSystemDbContext>();
-
+            
             services
                 .AddIdentity<User, IdentityRole>(options =>
                 {
@@ -50,6 +50,8 @@ namespace StorageSystem
                 })
                 .AddEntityFrameworkStores<StorageSystemDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddTransient<ICountryService, CountryService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

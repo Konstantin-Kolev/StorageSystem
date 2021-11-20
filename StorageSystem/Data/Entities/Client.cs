@@ -19,7 +19,7 @@ namespace StorageSystem.Data.Entities
 
         public string Email { get; set; }
 
-        public string CountryId { get; set; }
+        public int CountryId { get; set; }
         public Country Country { get; set; }
 
         public ICollection<Order> Orders { get; set; }

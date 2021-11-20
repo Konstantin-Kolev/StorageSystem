@@ -10,15 +10,15 @@ using StorageSystem.Data;
 namespace StorageSystem.Data.Migrations
 {
     [DbContext(typeof(StorageSystemDbContext))]
-    [Migration("20211113153704_Initial")]
+    [Migration("20211116155822_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.12")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -31,18 +31,18 @@ namespace StorageSystem.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
+                        .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
@@ -162,8 +162,8 @@ namespace StorageSystem.Data.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CountryId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -180,8 +180,13 @@ namespace StorageSystem.Data.Migrations
 
             modelBuilder.Entity("StorageSystem.Data.Entities.Country", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -265,8 +270,8 @@ namespace StorageSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CountryId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -345,8 +350,8 @@ namespace StorageSystem.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -361,12 +366,12 @@ namespace StorageSystem.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
@@ -380,6 +385,9 @@ namespace StorageSystem.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -390,17 +398,17 @@ namespace StorageSystem.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
+                        .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
+                        .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
@@ -462,7 +470,10 @@ namespace StorageSystem.Data.Migrations
                     b.HasOne("StorageSystem.Data.Entities.Country", "Country")
                         .WithMany("Clients")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("StorageSystem.Data.Entities.Delivery", b =>
@@ -471,6 +482,8 @@ namespace StorageSystem.Data.Migrations
                         .WithMany("AcceptedDeliveries")
                         .HasForeignKey("WorkerId")
                         .OnDelete(DeleteBehavior.ClientCascade);
+
+                    b.Navigation("Worker");
                 });
 
             modelBuilder.Entity("StorageSystem.Data.Entities.DeliveryItems", b =>
@@ -486,6 +499,10 @@ namespace StorageSystem.Data.Migrations
                         .HasForeignKey("ItemId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+
+                    b.Navigation("Delivery");
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("StorageSystem.Data.Entities.Item", b =>
@@ -495,6 +512,8 @@ namespace StorageSystem.Data.Migrations
                         .HasForeignKey("ManufacturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Manufacturer");
                 });
 
             modelBuilder.Entity("StorageSystem.Data.Entities.Manufacturer", b =>
@@ -502,7 +521,10 @@ namespace StorageSystem.Data.Migrations
                     b.HasOne("StorageSystem.Data.Entities.Country", "Country")
                         .WithMany("Manufacturers")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("StorageSystem.Data.Entities.Order", b =>
@@ -522,6 +544,12 @@ namespace StorageSystem.Data.Migrations
                         .WithMany("CompletedOrders")
                         .HasForeignKey("WorkerId")
                         .OnDelete(DeleteBehavior.ClientCascade);
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Manager");
+
+                    b.Navigation("Worker");
                 });
 
             modelBuilder.Entity("StorageSystem.Data.Entities.OrderItems", b =>
@@ -537,6 +565,53 @@ namespace StorageSystem.Data.Migrations
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("StorageSystem.Data.Entities.Client", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("StorageSystem.Data.Entities.Country", b =>
+                {
+                    b.Navigation("Clients");
+
+                    b.Navigation("Manufacturers");
+                });
+
+            modelBuilder.Entity("StorageSystem.Data.Entities.Delivery", b =>
+                {
+                    b.Navigation("DeliveryItems");
+                });
+
+            modelBuilder.Entity("StorageSystem.Data.Entities.Item", b =>
+                {
+                    b.Navigation("DeliveryItems");
+
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("StorageSystem.Data.Entities.Manufacturer", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("StorageSystem.Data.Entities.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("StorageSystem.Data.Entities.User", b =>
+                {
+                    b.Navigation("AcceptedDeliveries");
+
+                    b.Navigation("CompletedOrders");
+
+                    b.Navigation("CreatedOrders");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,8 +10,8 @@ using StorageSystem.Data;
 namespace StorageSystem.Data.Migrations
 {
     [DbContext(typeof(StorageSystemDbContext))]
-    [Migration("20211114151629_userRoleInUser")]
-    partial class userRoleInUser
+    [Migration("20211116173236_UserRoleInUser")]
+    partial class UserRoleInUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -162,8 +162,8 @@ namespace StorageSystem.Data.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CountryId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -180,8 +180,13 @@ namespace StorageSystem.Data.Migrations
 
             modelBuilder.Entity("StorageSystem.Data.Entities.Country", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -265,8 +270,8 @@ namespace StorageSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CountryId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -465,7 +470,8 @@ namespace StorageSystem.Data.Migrations
                     b.HasOne("StorageSystem.Data.Entities.Country", "Country")
                         .WithMany("Clients")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Country");
                 });
@@ -515,7 +521,8 @@ namespace StorageSystem.Data.Migrations
                     b.HasOne("StorageSystem.Data.Entities.Country", "Country")
                         .WithMany("Manufacturers")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Country");
                 });

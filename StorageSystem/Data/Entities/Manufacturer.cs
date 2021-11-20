@@ -15,7 +15,7 @@ namespace StorageSystem.Data.Entities
 
         public string Name { get; set; }
 
-        public string CountryId { get; set; }
+        public int CountryId { get; set; }
         public Country Country { get; set; }
 
         public ICollection<Item> Items { get; set; }

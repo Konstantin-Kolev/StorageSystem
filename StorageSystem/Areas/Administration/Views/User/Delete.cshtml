@@ -9,28 +9,28 @@
     <div class="col-md-4">
         <form method="post">
             <div class="form-group">
-                <label asp-for="Username"></label>
-                <input asp-for="Username" class="form-control" disabled />
+                <label asp-for="Username" class="font-weight-bold"></label>
+                <input asp-for="Username" readonly class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" disabled />
+                <label asp-for="Email" class="font-weight-bold"></label>
+                <input asp-for="Email" readonly class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Name"></label>
-                <input asp-for="Name" class="form-control" disabled />
+                <label asp-for="Name" class="font-weight-bold"></label>
+                <input asp-for="Name" readonly class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Surname"></label>
-                <input asp-for="Surname" class="form-control" disabled />
+                <label asp-for="Surname" class="font-weight-bold"></label>
+                <input asp-for="Surname" readonly class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="PhoneNumber"></label>
-                <input asp-for="PhoneNumber" class="form-control" disabled />
+                <label asp-for="PhoneNumber" class="font-weight-bold"></label>
+                <input asp-for="PhoneNumber" readonly class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="Role"></label>
-                <input asp-for="Role" class="form-control" disabled />
+                <label asp-for="Role" class="font-weight-bold"></label>
+                <input asp-for="Role" readonly class="form-control" />
             </div>
             <button type="submit" class="btn btn-danger">Delete</button>
             <a class="btn btn-light" asp-area="@AdministrationArea" asp-controller="User" asp-action="Index">Cancel</a>
